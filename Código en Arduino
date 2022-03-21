@@ -1,8 +1,20 @@
+//ººººººººººººººººººººººººººººººººººººººººººººººººººººººººººº
+// Program_Mass_of_the_Earth
+// March 21, 2022
+// Creators: Noguerón, Antonio and Javier, Francisco
+// Contact Noguerón, Antonio: nogueron.antonio29@gmail.com
+// Contact Javier, Francisco: a20182418@pucp.edu.pe
+//ººººººººººººººººººººººººººººººººººººººººººººººººººººººººººº
+// The purpose of this program is to be able to obtain gravity as a variable through pendular movements. 
+// These will be captured by a photoresistor that will collect the data to give us an average value.
 #include<LowPower.h>
 #include<Wire.h>
 #include<LiquidCrystal_I2C.h>
 #include<Keypad.h>
 
+// To develop the different parts of the hardware, 
+// some libraries will be needed and the Arduino IDE program will be used,
+// although this may be different from another.
 LiquidCrystal_I2C lcd (0x27,16,2);
 byte m=0;
 char Data[7];
@@ -15,6 +27,9 @@ byte cara[8]={
   B01110,
   B00000,
 };
+
+// Later we have to define certain variables that will allow us to enter the necessary 
+// values, such as our length of the respective pendulum and the options when taking the data.
 String msg1="Por favor ingresa la longitud:";
 String msg2= "Tú longitud es:";
 float longitud;
@@ -33,14 +48,17 @@ const byte columnas = 4;
 byte pinsFilas[filas] = {9, 8, 7, 6};
 byte pinsColumnas[columnas] = {5, 4, 3, 2};
 
-
+// For this work, it was developed in conjunction with a 12C module. 
+// Also as an addition, a character was included that will give the shape of
+// a smile when entering the program.
 char keys[filas][columnas] = {
   {'1','2','3','A'},
   {'4','5','6','B'},
   {'7','8','9','C'},
   {'*','0','#','.'}//en este caso, la letra D funcionará como un punto.
  };
-
+// As an additional, if we want to have a matrix keyboard, 
+// it will be essential to define the number of rows and columns as a matrix.
 Keypad teclado = Keypad(makeKeymap(keys), pinsFilas, pinsColumnas, filas, columnas);
 
 float voltage=0;
@@ -66,19 +84,22 @@ void setup(){
   lcd.write(byte(6));
   delay(4000);
   lcd.clear();
+  // Next we have to configure the Void setup, starting the LCD screen with a welcome message.
+// Keep in mind that these factors are totally optional, however they could give
+// a better experience when taking our data.
   pinMode(pinBoton,INPUT);
   pinMode(pinLASER,OUTPUT);
   Serial.begin(9600);
-  digitalWrite(pinLASER,LOW); //El laser empieza, lógicamente, apagado
+  digitalWrite(pinLASER,LOW);  // The laser starts, logically, off
   Serial.println();
   Serial.println("Bienvenido");
   Serial.println(msg1);
   delay(2000);
   lcd.clear();
-  lcd.setCursor(3,0);
-  lcd.print(mensaje1);
-  lcd.setCursor(3,1);
-  lcd.print(mensaje2);
+  lcd.setCursor(3,0);// Position the cursor at position (3,0)
+  lcd.print(mensaje1);// Show the message
+  lcd.setCursor(3,1);// Position the cursor at position (3,1)
+  lcd.print(mensaje2);// Show the message
   delay(4000);
   lcd.clear();
   Serial.println("Longitud: ");
